@@ -1,6 +1,14 @@
 local config = function()
   local treesitter = require("nvim-treesitter.configs")
 
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "markdown" },
+    callback = function(ev)
+      -- treesitter-context is buggy with Markdown files
+      require("treesitter-context").disable()
+    end
+  })
+
   treesitter.setup({
     indent = {
       enable = true,
@@ -60,6 +68,14 @@ return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    {
+      "nvim-treesitter/nvim-treesitter-context", -- show context wraps
+      opts = {
+        enable = true,
+        mode = "topline",
+        line_numbers = true,
+      }
+    }
   },
   lazy = false,
   build = ":TSUpdate",
