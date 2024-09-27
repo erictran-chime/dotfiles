@@ -89,10 +89,8 @@ return {
     map("n", "-", ":Telescope file_browser<CR>")
 
     map("n", "<leader>fb", builtin.buffers, opts)    -- Lists open buffers
-    map("n", "<leader>fm", builtin.marks, opts)      -- Lists marks
     map("n", "<leader>fd", builtin.find_files, opts) -- Lists files in your current working directory, respects .gitignore
-    map("n", "<leader>fg", builtin.live_grep, opts)  -- Lists files in your current working directory, respects .gitignore
+    map("n", "<leader>fs", builtin.live_grep, opts)  -- Lists files in your current working directory, respects .gitignore
     map("n", "<leader>fx", builtin.treesitter, opts) -- Lists tree-sitter symbols
-    map("n", "<leader>fs", builtin.live_grep, opts)  -- Lists spell options
   end
 }
