@@ -1,31 +1,5 @@
 require("config.lazy")
 
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- optionally enable 24-bit colour
-vim.opt.termguicolors = true
-
--- empty setup using defaults
-require("nvim-tree").setup()
-
--- OR setup with some options
-require("nvim-tree").setup({
-  sort = {
-    sorter = "case_sensitive",
-  },
-  view = {
-    width = 30,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
-
 -- keymaps
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 -- local discipline = require("plugins.discipline")
@@ -48,6 +22,8 @@ keymap.set("n", "<Leader>d", '"_d')
 keymap.set("n", "<Leader>D", '"_D')
 keymap.set("v", "<Leader>d", '"_d')
 keymap.set("v", "<Leader>D", '"_D')
+
+keymap.set("n", "<leader>e", ":Ex<CR>")
 
 -- Increment/decrement
 keymap.set("n", "+", "<C-a>")
