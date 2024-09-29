@@ -1,6 +1,8 @@
 require("config.lazy")
 require("config.keymaps")
 
+vim.opt.clipboard:append { 'unnamed', 'unnamedplus' }
+
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.go",
   callback = function()
@@ -27,4 +29,26 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end
     vim.lsp.buf.format({ async = false })
   end
+})
+
+vim.g.clipboard = {
+  name = "tmux",
+  copy = {
+    ["+"] = { "tmux", "load-buffer", "-" },
+    ["*"] = { "tmux", "load-buffer", "-" },
+  },
+  paste = {
+    ["+"] = { "tmux", "save-buffer", "-" },
+    ["*"] = { "tmux", "save-buffer", "-" },
+  },
+}
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("osc52", { clear = true }),
+  callback = function()
+    -- vim.print(vim.v.event)
+    if vim.v.operator == "y" then
+      require("vim.ui.clipboard.osc52").copy("+")(vim.v.event.regcontents)
+      -- require("osc52").copy_register("+")
+    end
+  end,
 })
