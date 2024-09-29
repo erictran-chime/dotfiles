@@ -7,11 +7,27 @@ local opts = { noremap = true, silent = true }
 
 -- try jk
 keymap.set("i", "jk", "<Esc>")
-keymap.set("n", "jk", "<Esc>")
 
-
---
+-- close buffer
 keymap.set("n", "<C-x", ":bd")
+
+-- copy/paste
+
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+  },
+}
+
+vim.keymap.set('n', '<leader>c', '<Plug>OSCYankOperator')
+vim.keymap.set('n', '<leader>cc', '<leader>c_', { remap = true })
+vim.keymap.set('v', '<leader>c', '<Plug>OSCYankVisual')
 
 -- Do things without affecting the registers
 keymap.set("n", "x", '"_x')

@@ -33,7 +33,6 @@ return {
   branch = "0.1.x",
   config = function()
     local telescope = require("telescope")
-    local actions = require("telescope.actions")
 
     telescope.setup({
       defaults = {
