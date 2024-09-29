@@ -5,6 +5,14 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+-- try jk
+keymap.set("i", "jk", "<Esc>")
+keymap.set("n", "jk", "<Esc>")
+
+
+--
+keymap.set("n", "<C-x", ":bd")
+
 -- Do things without affecting the registers
 keymap.set("n", "x", '"_x')
 keymap.set("n", "<Leader>p", '"0p')
