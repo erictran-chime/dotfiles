@@ -20,6 +20,32 @@ local delete_file = function(prompt_bufnr)
   end)
 end
 
+local function grep_visual_selection()
+  -- Get the current visual selection
+  local _, csrow, cscol, _ = unpack(vim.fn.getpos("'<"))
+  local _, cerow, cecol, _ = unpack(vim.fn.getpos("'>"))
+  local lines = vim.fn.getline(csrow, cerow)
+
+  -- If it's a single line, just get the substring
+  if #lines == 1 then
+    lines[1] = string.sub(lines[1], cscol, cecol)
+  else
+    -- Adjust the first and last lines for multi-line visual selection
+    lines[1] = string.sub(lines[1], cscol)
+    lines[#lines] = string.sub(lines[#lines], 1, cecol)
+  end
+
+  -- Join the lines into a single string
+  local selection = table.concat(lines, " ")
+
+  -- Call Telescope's grep_string with the visual selection as default text
+  require('telescope.builtin').grep_string({
+    default_text = selection,
+  })
+end
+
+
+
 return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
@@ -66,7 +92,7 @@ return {
           grouped = true,         -- group initial sorting by directories and then files
           hidden = true,          -- show hidden files
           hide_parent_dir = true, -- hide `../` in the file browser
-          hijack_netrw = true,    -- use telescope file browser when opening directory paths
+          -- hijack_netrw = true,    -- use telescope file browser when opening directory paths
           prompt_path = true,     -- show the current relative path from cwd as the prompt prefix
           use_fd = true           -- use `fd` instead of plenary, make sure to install `fd`
         }
@@ -98,7 +124,16 @@ return {
 
     map("n", "<leader>fb", builtin.buffers, opts)    -- Lists open buffers
     map("n", "<leader>fd", builtin.find_files, opts) -- Lists files in your current working directory, respects .gitignore
-    map("n", "<leader>fs", builtin.live_grep, opts)  -- Lists files in your current working directory, respects .gitignore
+    map("n", "<leader>fs", builtin.live_grep, opts)
     map("n", "<leader>fx", builtin.treesitter, opts) -- Lists tree-sitter symbols
+
+    -- Pipe highlighted telescope
+    map("v", "<leader>fs", function()
+      vim.cmd('normal! "zy')
+      local selected_text = vim.fn.getreg('z')
+      require('telescope.builtin').grep_string({
+        default_text = selected_text,
+      })
+    end, { noremap = true, silent = true })
   end
 }

@@ -5,12 +5,15 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+
 -- try jk
 keymap.set("i", "jk", "<Esc>")
 
 -- close buffer
-keymap.set("n", "<C-x", ":bd")
+keymap.set("n", "<Leader>x", ":bd<CR>")
 
+-- live grep
+-- keymap.set("<leader>fs" "zy<cmd>exec 'Telescope grep_string default_text=' . escape(@z, ' ')<cr>")
 -- copy/paste
 
 vim.g.clipboard = {
@@ -87,10 +90,7 @@ keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
 end, opts)
 
-keymap.set("n", "<leader>r", function()
-  require("craftzdog.hsl").replaceHexWithHSL()
-end)
-
-keymap.set("n", "<leader>i", function()
-  require("craftzdog.lsp").toggleInlayHints()
-end)
+-- Diagnostics
+keymap.set("n", "<C-k>", function()
+  vim.diagnostic.goto_prev()
+end, opts)
