@@ -87,7 +87,7 @@ return {
       extensions = {
         file_browser = {
           theme = "ivy",
-          path = "%:p:h",         -- open from within the folder of your current buffer
+          -- path = "%:p:h",         -- open from within the folder of your current buffer
           display_stat = false,   -- don't show file stat
           grouped = true,         -- group initial sorting by directories and then files
           hidden = true,          -- show hidden files
