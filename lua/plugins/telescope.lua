@@ -20,32 +20,6 @@ local delete_file = function(prompt_bufnr)
   end)
 end
 
-local function grep_visual_selection()
-  -- Get the current visual selection
-  local _, csrow, cscol, _ = unpack(vim.fn.getpos("'<"))
-  local _, cerow, cecol, _ = unpack(vim.fn.getpos("'>"))
-  local lines = vim.fn.getline(csrow, cerow)
-
-  -- If it's a single line, just get the substring
-  if #lines == 1 then
-    lines[1] = string.sub(lines[1], cscol, cecol)
-  else
-    -- Adjust the first and last lines for multi-line visual selection
-    lines[1] = string.sub(lines[1], cscol)
-    lines[#lines] = string.sub(lines[#lines], 1, cecol)
-  end
-
-  -- Join the lines into a single string
-  local selection = table.concat(lines, " ")
-
-  -- Call Telescope's grep_string with the visual selection as default text
-  require('telescope.builtin').grep_string({
-    default_text = selection,
-  })
-end
-
-
-
 return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
@@ -80,13 +54,12 @@ return {
             ["<C-u>"] = actions.results_scrolling_up,
             ["<C-q>"] = actions.send_selected_to_qflist +
                 actions.open_qflist, -- send selected to quickfixlist
-            -- ["<C-x>"] = delete_file,
+            ["<C-x>"] = delete_file,
           }
         }
       },
       extensions = {
         file_browser = {
-          theme = "ivy",
           -- path = "%:p:h",         -- open from within the folder of your current buffer
           display_stat = false,   -- don't show file stat
           grouped = true,         -- group initial sorting by directories and then files

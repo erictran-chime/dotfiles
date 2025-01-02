@@ -41,16 +41,16 @@ return {
       pattern = { "go" },
       callback = function(ev)
         -- CTRL/control keymaps
-        vim.api
-            .nvim_buf_set_keymap(0, "n", "<C-i>", ":GoImports<CR>", {})
-        vim.api.nvim_buf_set_keymap(0, "n", "<C-b>", ":GoBuild %:h<CR>",
-          {})
-        vim.api.nvim_buf_set_keymap(0, "n", "<C-t>", ":GoTestPkg<CR>",
-          {})
-        vim.api.nvim_buf_set_keymap(0, "n", "<C-c>",
-          ":GoCoverage -p<CR>", {})
-        vim.api.nvim_buf_set_keymap(0, "n", "<C-r>",
-          ":GoRun<CR>", {})
+        -- vim.api
+        --     .nvim_buf_set_keymap(0, "n", "<C-i>", ":GoImports<CR>", {})
+        -- vim.api.nvim_buf_set_keymap(0, "n", "<C-b>", ":GoBuild %:h<CR>",
+        --   {})
+        -- vim.api.nvim_buf_set_keymap(0, "n", "<C-t>", ":GoTestPkg<CR>",
+        --   {})
+        -- vim.api.nvim_buf_set_keymap(0, "n", "<C-c>",
+        --   ":GoCoverage -p<CR>", {})
+        -- vim.api.nvim_buf_set_keymap(0, "n", "<C-r>",
+        --   ":GoRun<CR>", {})
 
         -- Opens test files
         -- vim.api.nvim_buf_set_keymap(0, "n", "A",
